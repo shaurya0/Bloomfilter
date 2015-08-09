@@ -1,0 +1,22 @@
+{
+    "folders":
+    [
+        {
+            "path": "src",
+            "file_include_patterns": ["*.hs"]
+        },
+        {
+            "path": ".",
+            "file_include_patterns": ["*.cabal"]
+        },
+
+    ],
+    "build_systems":
+    [
+        {
+            "name": "cabal_build",
+            "cmd": ["cabal", "build"],
+            "working_dir": "${project_path}"
+        }
+    ]
+}
