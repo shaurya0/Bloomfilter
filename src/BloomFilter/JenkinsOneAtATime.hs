@@ -22,5 +22,5 @@ resultHelper x =
 
 jenkinsOneAtATime :: BS.ByteString -> Word32
 jenkinsOneAtATime key =
-    let hash = foldl innerLoopHelper 0 $ map fromIntegral $ BS.unpack key
+    let hash = foldl innerLoopHelper 0 $ map fromIntegral $ (BS.unpack . BS.reverse) key
     in  resultHelper hash

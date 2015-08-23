@@ -29,10 +29,11 @@ testText = ["for (jenkinsOneAtATime 34234),",
     "for (murmurHash2 878492),"]
 
 testInputs :: [BS.ByteString]
-testInputs = map (BS.reverse . encode) inputs
+testInputs = map encode inputs
 
 testCalls :: [(BS.ByteString -> Word32)]
 testCalls =[jenkinsOneAtATime,
+    jenkinsOneAtATime,
     jenkinsOneAtATime,
     jenkinsOneAtATime,
     jenkinsOneAtATime,
