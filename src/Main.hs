@@ -20,4 +20,4 @@ main = do
     let hfs = [jenkinsOneAtATime, murmurHash2 seed]
     let bf = BF.fromList hfs serializedData bitArraySize
     let count = length $ filter (BF.elem bf) serializedData
-    putStrLn $ show count
+    print count

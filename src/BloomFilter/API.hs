@@ -31,7 +31,7 @@ data BloomFilter = BloomFilter
 
 elem :: BloomFilter -> BS.ByteString -> Bool
 elem (BloomFilter numBits hfs bitArr) item =
-    and $ map (bitArr !) indices
+    all (bitArr !) indices
     where
         hashes = map ($ item) hfs
         indices = map (`mod` numBits) hashes
@@ -41,5 +41,4 @@ fromList :: BFM.HashFunctions -> [BS.ByteString] -> Word32 -> BloomFilter
 fromList hfs items numBits = BloomFilter numBits hfs $ runST $ do
     mbf <- BFM.new hfs numBits
     mapM_ (BFM.insert mbf) items
-    newArr <- freeze (BFM.bitArray mbf)
-    return newArr
+    freeze (BFM.bitArray mbf)

@@ -31,16 +31,16 @@ data MutableBloomFilter s = MutableBloomFilter
 
 
 new :: HashFunctions -> Word32 -> ST s (MutableBloomFilter s)
-new hfs numBits = MutableBloomFilter hfs numBits `liftM` (newArray (0, numBits - 1) False)
+new hfs numBits = MutableBloomFilter hfs numBits `liftM` newArray (0, numBits - 1) False
 
 insert :: MutableBloomFilter s -> BS.ByteString -> ST s ()
-insert bf@(MutableBloomFilter hfs numBits arr) item = do
+insert bf@(MutableBloomFilter hfs numBits arr) item =
     mapM_ (\i -> writeArray arr i True) indices
     where
         hashes = map ($ item) hfs
         indices = map (`mod` numBits) hashes
 
-elem :: MutableBloomFilter s -> BS.ByteString -> ST s (Bool)
+elem :: MutableBloomFilter s -> BS.ByteString -> ST s Bool
 elem (MutableBloomFilter hfs numBits arr) item = do
         result <- mapM (readArray arr) indices
         return $ and result
